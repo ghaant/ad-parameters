@@ -12,6 +12,7 @@ class Placement::Seq::Create
 
   def self.run(xml_hash)
     eur_placements = []
+    eur_creatives = []
 
     xml_hash['Placements']['Placement'].each do |placement|
       next if placement['currency'] == 'SEK'
@@ -27,6 +28,21 @@ class Placement::Seq::Create
       eur_placements << eur_placement
     end
 
+    xml_hash['Creatives']['Creative'].each do |creative|
+      next if creative['currency'] == 'SEK'
+
+      eur_creative = creative
+      eur_creative['price'] = eur_creative['price'].to_f
+
+      unless eur_creative['currency'] == 'EUR'
+        eur_creative['price'] = (eur_creative['price'] / RATES[eur_creative['currency']]).round(2)
+        eur_creative['currency'] = 'EUR'
+      end
+
+      eur_creatives << eur_creative
+    end
+
     puts eur_placements
+    puts eur_creatives
   end
 end
