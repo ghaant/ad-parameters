@@ -19,7 +19,7 @@ class Placement::Seq::Create
     groom_creatives
     create_placement_seq_message
 
-    $stdout.print(@placement_seq_message)
+    print @placement_seq_message
   end
 
   private
@@ -75,5 +75,7 @@ class Placement::Seq::Create
 
       @placement_seq_message['placement'] << placement_message unless placement_message['creative'].blank?
     end
+
+    @placement_seq_message
   end
 end
