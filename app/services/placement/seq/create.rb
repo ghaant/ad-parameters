@@ -1,6 +1,7 @@
 class Placement::Seq::Create
-  RATES =
+  CURRENCY_RATES =
     {
+      'EUR' => 1,
       'TYR' => 3.31,
       'USD' => 1.13
     }.freeze
@@ -25,13 +26,14 @@ class Placement::Seq::Create
 
   def format_placements
     @raw_placements.each do |placement|
-      next if placement['currency'] == 'SEK'
+      # Rates of other currencies are unknown.
+      next unless CURRENCY_RATES.has_key?(placement['currency'])
 
       eur_placement = placement
-      eur_placement['floor'] = eur_placement['floor'].to_f.round(2)
+      eur_placement['floor'] = eur_placement['floor'].to_f
 
       unless eur_placement['currency'] == 'EUR'
-        eur_placement['floor'] = (eur_placement['floor'] / RATES[eur_placement['currency']]).round(2)
+        eur_placement['floor'] = (eur_placement['floor'] / CURRENCY_RATES[eur_placement['currency']])
         eur_placement['currency'] = 'EUR'
       end
 
@@ -41,13 +43,14 @@ class Placement::Seq::Create
 
   def format_creatives
     @raw_creatives.each do |creative|
-      next if creative['currency'] == 'SEK'
+      # Rates of other currencies are unknown.
+      next unless CURRENCY_RATES.has_key?(creative['currency'])
 
       eur_creative = creative
-      eur_creative['price'] = eur_creative['price'].to_f.round(2)
+      eur_creative['price'] = eur_creative['price'].to_f
 
       unless eur_creative['currency'] == 'EUR'
-        eur_creative['price'] = (eur_creative['price'] / RATES[eur_creative['currency']]).round(2)
+        eur_creative['price'] = (eur_creative['price'] / CURRENCY_RATES[eur_creative['currency']])
         eur_creative['currency'] = 'EUR'
       end
 
