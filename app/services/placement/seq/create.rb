@@ -18,8 +18,6 @@ class Placement::Seq::Create
     groom_placements
     groom_creatives
     create_placement_seq_message
-
-    print @placement_seq_message
   end
 
   private
