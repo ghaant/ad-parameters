@@ -11,11 +11,14 @@ class Placement::Seq::Create
     @eur_creatives = []
     @raw_placements = xml_hash&.dig('Configuration', 'Placements', 'Placement')
     @raw_creatives = xml_hash&.dig('Configuration', 'Creatives', 'Creative')
+    # Hash.from_xml in ParameterController makes it an array, only when there are more than 1 placements/creatives.
+    @raw_placements = [@raw_placements] if @raw_placements.is_a?(Hash)
+    @raw_creatives = [@raw_creatives] if @raw_creatives.is_a?(Hash)
     @placement_seq_message = ::FYBER::Userconfiguration::PlacementSeq.new
   end
 
   def run
-    return @placement_seq_message if (@raw_placements.blank? || @raw_creatives.blank?)
+    return @placement_seq_message if @raw_placements.blank? || @raw_creatives.blank?
 
     groom_placements
     groom_creatives

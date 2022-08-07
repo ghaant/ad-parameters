@@ -30,31 +30,64 @@ RSpec.describe Placement::Seq::Create do
   end
 
   describe '#initialize' do
-    it 'fetches an array of placements correctly' do
-      expect(described_class.new(input_hash).instance_variable_get(:@raw_placements)).to match_array(
-        [
-          { 'id' => 'plc-1', 'floor' => '1.3456', 'currency' => 'EUR' },
-          { 'id' => 'plc-2', 'floor' => '90.234', 'currency' => 'SEK' },
-          { 'id' => 'plc-3', 'floor' => '8.343', 'currency' => 'TYR' },
-          { 'id' => 'plc-4', 'floor' => '20.56', 'currency' => 'USD' },
-          { 'id' => 'plc-5', 'floor' => '27.9856', 'currency' => 'EUR' },
-          { 'id' => 'plc-6', 'floor' => '22.5656', 'currency' => 'SEK' },
-          { 'id' => 'plc-7', 'floor' => '0', 'currency' => 'EUR' },
-          { 'id' => 'plc-8', 'floor' => '1.3456', 'currency' => 'USD' }
-        ]
-      )
+    context 'when there are many placements/creatives' do
+      it 'fetches an array of placements correctly' do
+        expect(described_class.new(input_hash).instance_variable_get(:@raw_placements)).to match_array(
+          [
+            { 'id' => 'plc-1', 'floor' => '1.3456', 'currency' => 'EUR' },
+            { 'id' => 'plc-2', 'floor' => '90.234', 'currency' => 'SEK' },
+            { 'id' => 'plc-3', 'floor' => '8.343', 'currency' => 'TYR' },
+            { 'id' => 'plc-4', 'floor' => '20.56', 'currency' => 'USD' },
+            { 'id' => 'plc-5', 'floor' => '27.9856', 'currency' => 'EUR' },
+            { 'id' => 'plc-6', 'floor' => '22.5656', 'currency' => 'SEK' },
+            { 'id' => 'plc-7', 'floor' => '0', 'currency' => 'EUR' },
+            { 'id' => 'plc-8', 'floor' => '1.3456', 'currency' => 'USD' }
+          ]
+        )
+      end
+
+      it 'fetches an array of creatives correctly' do
+        expect(described_class.new(input_hash).instance_variable_get(:@raw_creatives)).to match_array(
+          [
+            { 'id' => 'Video-1', 'price' => '6.4567', 'currency' => 'EUR' },
+            { 'id' => 'Video-4', 'price' => '1.1234', 'currency' => 'USD' },
+            { 'id' => 'Video-7', 'price' => '55.123', 'currency' => 'SEK' },
+            { 'id' => 'Video-12', 'price' => '16.4567', 'currency' => 'EUR' },
+            { 'id' => 'Video-25', 'price' => '9.4567', 'currency' => 'USD' }
+          ]
+        )
+      end
     end
 
-    it 'fetches an array of creatives correctly' do
-      expect(described_class.new(input_hash).instance_variable_get(:@raw_creatives)).to match_array(
-        [
-          { 'id' => 'Video-1', 'price' => '6.4567', 'currency' => 'EUR' },
-          { 'id' => 'Video-4', 'price' => '1.1234', 'currency' => 'USD' },
-          { 'id' => 'Video-7', 'price' => '55.123', 'currency' => 'SEK' },
-          { 'id' => 'Video-12', 'price' => '16.4567', 'currency' => 'EUR' },
-          { 'id' => 'Video-25', 'price' => '9.4567', 'currency' => 'USD' }
-        ]
-      )
+    context 'when there is only one placement/creative' do
+      let!(:input_hash) do
+        {
+          'Configuration' => {
+            'Creatives' => {
+              'Creative' => [
+                { 'id' => 'Video-1', 'price' => '6.4567', 'currency' => 'EUR' },
+                { 'id' => 'Video-4', 'price' => '1.1234', 'currency' => 'USD' },
+                { 'id' => 'Video-7', 'price' => '55.123', 'currency' => 'SEK' },
+                { 'id' => 'Video-12', 'price' => '16.4567', 'currency' => 'EUR' },
+                { 'id' => 'Video-25', 'price' => '9.4567', 'currency' => 'USD' }
+              ]
+            },
+            'Placements' => {
+              'Placement' => [
+                { 'id' => 'plc-1', 'floor' => '1.3456', 'currency' => 'EUR' },
+              ]
+            }
+          }
+        }
+      end
+
+      it 'still works fine' do
+        expect(described_class.new(input_hash).instance_variable_get(:@raw_placements)).to match_array(
+          [
+            { 'id' => 'plc-1', 'floor' => '1.3456', 'currency' => 'EUR' },
+          ]
+        )
+      end
     end
   end
 
