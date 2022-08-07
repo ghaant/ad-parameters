@@ -1,7 +1,7 @@
 class Placement::Seq::Create
   CURRENCY_RATES =
     {
-      'EUR' => 1,
+      'EUR' => 1.0,
       'TYR' => 3.31,
       'USD' => 1.13
     }.freeze
@@ -15,8 +15,8 @@ class Placement::Seq::Create
   end
 
   def run
-    format_placements
-    format_creatives
+    groom_placements
+    groom_creatives
     create_placement_seq_message
 
     $stdout.print(@placement_seq_message)
@@ -24,7 +24,7 @@ class Placement::Seq::Create
 
   private
 
-  def format_placements
+  def groom_placements
     @raw_placements.each do |placement|
       # Rates of other currencies are unknown.
       next unless CURRENCY_RATES.has_key?(placement['currency'])
@@ -39,9 +39,11 @@ class Placement::Seq::Create
 
       @eur_placements << eur_placement
     end
+
+    @eur_placements
   end
 
-  def format_creatives
+  def groom_creatives
     @raw_creatives.each do |creative|
       # Rates of other currencies are unknown.
       next unless CURRENCY_RATES.has_key?(creative['currency'])
@@ -56,6 +58,8 @@ class Placement::Seq::Create
 
       @eur_creatives << eur_creative
     end
+
+    @eur_creatives
   end
 
   def create_placement_seq_message
