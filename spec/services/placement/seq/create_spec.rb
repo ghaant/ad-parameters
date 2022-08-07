@@ -87,9 +87,31 @@ RSpec.describe Placement::Seq::Create do
   end
 
   describe '#run' do
-    it 'creates placement seq message' do
+    it 'creates and print placement seq message' do
       expect { described_class.new(input_hash).run }.to output(
-        '<FYBER::Userconfiguration::PlacementSeq: placement: [<FYBER::Userconfiguration::Placement: id: "plc-1", creative: [<FYBER::Userconfiguration::Creative: id: "Video-1", price: 6.456699848175049>, <FYBER::Userconfiguration::Creative: id: "Video-12", price: 16.45669937133789>, <FYBER::Userconfiguration::Creative: id: "Video-25", price: 8.36876106262207>]>, <FYBER::Userconfiguration::Placement: id: "plc-3", creative: [<FYBER::Userconfiguration::Creative: id: "Video-1", price: 6.456699848175049>, <FYBER::Userconfiguration::Creative: id: "Video-12", price: 16.45669937133789>, <FYBER::Userconfiguration::Creative: id: "Video-25", price: 8.36876106262207>]>, <FYBER::Userconfiguration::Placement: id: "plc-7", creative: [<FYBER::Userconfiguration::Creative: id: "Video-1", price: 6.456699848175049>, <FYBER::Userconfiguration::Creative: id: "Video-4", price: 0.9941592812538147>, <FYBER::Userconfiguration::Creative: id: "Video-12", price: 16.45669937133789>, <FYBER::Userconfiguration::Creative: id: "Video-25", price: 8.36876106262207>]>, <FYBER::Userconfiguration::Placement: id: "plc-8", creative: [<FYBER::Userconfiguration::Creative: id: "Video-1", price: 6.456699848175049>, <FYBER::Userconfiguration::Creative: id: "Video-12", price: 16.45669937133789>, <FYBER::Userconfiguration::Creative: id: "Video-25", price: 8.36876106262207>]>]>'
+        '<FYBER::Userconfiguration::PlacementSeq: placement: ['\
+          '<FYBER::Userconfiguration::Placement: id: "plc-1", creative: ['\
+            '<FYBER::Userconfiguration::Creative: id: "Video-1", price: 6.456699848175049>, '\
+            '<FYBER::Userconfiguration::Creative: id: "Video-12", price: 16.45669937133789>, '\
+            '<FYBER::Userconfiguration::Creative: id: "Video-25", price: 8.36876106262207>'\
+          ']>, '\
+          '<FYBER::Userconfiguration::Placement: id: "plc-3", creative: ['\
+            '<FYBER::Userconfiguration::Creative: id: "Video-1", price: 6.456699848175049>, '\
+            '<FYBER::Userconfiguration::Creative: id: "Video-12", price: 16.45669937133789>, '\
+            '<FYBER::Userconfiguration::Creative: id: "Video-25", price: 8.36876106262207>'\
+          ']>, '\
+          '<FYBER::Userconfiguration::Placement: id: "plc-7", creative: ['\
+            '<FYBER::Userconfiguration::Creative: id: "Video-1", price: 6.456699848175049>, '\
+            '<FYBER::Userconfiguration::Creative: id: "Video-4", price: 0.9941592812538147>, '\
+            '<FYBER::Userconfiguration::Creative: id: "Video-12", price: 16.45669937133789>, '\
+            '<FYBER::Userconfiguration::Creative: id: "Video-25", price: 8.36876106262207>'\
+          ']>, '\
+          '<FYBER::Userconfiguration::Placement: id: "plc-8", creative: ['\
+            '<FYBER::Userconfiguration::Creative: id: "Video-1", price: 6.456699848175049>, '\
+            '<FYBER::Userconfiguration::Creative: id: "Video-12", price: 16.45669937133789>, '\
+            '<FYBER::Userconfiguration::Creative: id: "Video-25", price: 8.36876106262207>'\
+          ']>'\
+        ']>'
       ).to_stdout
     end
   end
