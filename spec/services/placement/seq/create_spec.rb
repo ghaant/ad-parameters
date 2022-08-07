@@ -139,5 +139,29 @@ RSpec.describe Placement::Seq::Create do
         expect(described_class.new({}).run).blank?
       end
     end
+
+    context 'when there are no allowed creative currencies or placement ones' do
+      let!(:input_hash) do
+        {
+          'Configuration' => {
+            'Creatives' => {
+              'Creative' => [
+                { 'id' => 'Video-7', 'price' => '55.123', 'currency' => 'SEK' },
+              ]
+            },
+            'Placements' => {
+              'Placement' => [
+                { 'id' => 'plc-1', 'floor' => '1.3456', 'currency' => 'EUR' },
+              ]
+            }
+          }
+        }
+      end
+
+      it 'an empty Protobuf message' do
+        expect(described_class.new({}).run.is_a?(FYBER::Userconfiguration::PlacementSeq)).to be(true)
+        expect(described_class.new({}).run).blank?
+      end
+    end
   end
 end
