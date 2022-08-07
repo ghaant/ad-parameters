@@ -1,5 +1,3 @@
-require './app/protobuf/FYBER/userconfiguration'
-
 class Placement::Seq::Create
   RATES =
     {
