@@ -9,12 +9,14 @@ class Placement::Seq::Create
   def initialize(xml_hash)
     @eur_placements = []
     @eur_creatives = []
-    @raw_placements = xml_hash['Configuration']['Placements']['Placement']
-    @raw_creatives = xml_hash['Configuration']['Creatives']['Creative']
+    @raw_placements = xml_hash.dig('Configuration', 'Placements', 'Placement')
+    @raw_creatives = xml_hash.dig('Configuration', 'Creatives', 'Creative')
     @placement_seq_message = ::FYBER::Userconfiguration::PlacementSeq.new
   end
 
   def run
+    return @placement_seq_message if (@raw_placements.blank? || @raw_creatives.blank?)
+
     groom_placements
     groom_creatives
     create_placement_seq_message
@@ -61,10 +63,10 @@ class Placement::Seq::Create
   end
 
   def create_placement_seq_message
-    @eur_placements.each do |placement|
+    @eur_placements&.each do |placement|
       placement_message = ::FYBER::Userconfiguration::Placement.new(id: placement['id'], creative: [])
 
-      @eur_creatives.each do |creative|
+      @eur_creatives&.each do |creative|
         if creative['price'] >= placement['floor']
           placement_message['creative'] <<
             ::FYBER::Userconfiguration::Creative.new(id: creative['id'], price: creative['price'])

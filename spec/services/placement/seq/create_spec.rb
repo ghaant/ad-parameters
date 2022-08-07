@@ -89,46 +89,55 @@ RSpec.describe Placement::Seq::Create do
   end
 
   describe '#run' do
-    it 'creates placement seq message' do
-      expect(described_class.new(input_hash).run.to_h).to eq(
-        {
-          placement: [
-            {
-              id: 'plc-1',
-              creative: [
-                { id: 'Video-1', price: 6.456699848175049 },
-                { id: 'Video-12', price: 16.45669937133789 },
-                { id: 'Video-25', price: 8.36876106262207 }
-              ]
-            },
-            {
-              id: 'plc-3',
-              creative: [
-                { id: 'Video-1', price: 6.456699848175049 },
-                { id: 'Video-12', price: 16.45669937133789 },
-                { id: 'Video-25', price: 8.36876106262207 }
-              ]
-            },
-            {
-              id: 'plc-7',
-              creative: [
-                { id: 'Video-1', price: 6.456699848175049 },
-                { id: 'Video-4', price: 0.9941592812538147 },
-                { id: 'Video-12', price: 16.45669937133789 },
-                { id: 'Video-25', price: 8.36876106262207 }
-              ]
-            },
-            {
-              id: 'plc-8',
-              creative: [
-                { id: 'Video-1', price: 6.456699848175049 },
-                { id: 'Video-12', price: 16.45669937133789 },
-                { id: 'Video-25', price: 8.36876106262207 }
-              ]
-            }
-          ]
-        }
-      )
+    context 'when the XML contains necessary data' do
+      it 'creates placement seq message' do
+        expect(described_class.new(input_hash).run.to_h).to eq(
+          {
+            placement: [
+              {
+                id: 'plc-1',
+                creative: [
+                  { id: 'Video-1', price: 6.456699848175049 },
+                  { id: 'Video-12', price: 16.45669937133789 },
+                  { id: 'Video-25', price: 8.36876106262207 }
+                ]
+              },
+              {
+                id: 'plc-3',
+                creative: [
+                  { id: 'Video-1', price: 6.456699848175049 },
+                  { id: 'Video-12', price: 16.45669937133789 },
+                  { id: 'Video-25', price: 8.36876106262207 }
+                ]
+              },
+              {
+                id: 'plc-7',
+                creative: [
+                  { id: 'Video-1', price: 6.456699848175049 },
+                  { id: 'Video-4', price: 0.9941592812538147 },
+                  { id: 'Video-12', price: 16.45669937133789 },
+                  { id: 'Video-25', price: 8.36876106262207 }
+                ]
+              },
+              {
+                id: 'plc-8',
+                creative: [
+                  { id: 'Video-1', price: 6.456699848175049 },
+                  { id: 'Video-12', price: 16.45669937133789 },
+                  { id: 'Video-25', price: 8.36876106262207 }
+                ]
+              }
+            ]
+          }
+        )
+      end
+    end
+
+    context 'when the XML misses placements or creatives data' do
+      it 'an empty Protobuf message' do
+        expect(described_class.new({}).run.is_a?(FYBER::Userconfiguration::PlacementSeq)).to be(true)
+        expect(described_class.new({}).run).blank?
+      end
     end
   end
 end
