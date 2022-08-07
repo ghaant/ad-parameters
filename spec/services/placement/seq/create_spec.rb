@@ -89,7 +89,7 @@ RSpec.describe Placement::Seq::Create do
   end
 
   describe '#run' do
-    context 'when the XML contains necessary data' do
+    context 'when the XML hash contains necessary data' do
       it 'creates placement seq message' do
         expect(described_class.new(input_hash).run.to_h).to eq(
           {
@@ -133,10 +133,29 @@ RSpec.describe Placement::Seq::Create do
       end
     end
 
-    context 'when the XML misses placements or creatives data' do
+    context 'when the XML hash is empty' do
       it 'an empty Protobuf message' do
-        expect(described_class.new({}).run.is_a?(FYBER::Userconfiguration::PlacementSeq)).to be(true)
-        expect(described_class.new({}).run).blank?
+        expect(described_class.new(nil).run.is_a?(FYBER::Userconfiguration::PlacementSeq)).to be(true)
+        expect(described_class.new(nil).run).blank?
+      end
+    end
+
+    context 'when the XML hash misses placements or creatives data' do
+      let!(:input_hash) do
+        {
+          'Configuration' => {
+            'Placements' => {
+              'Placement' => [
+                { 'id' => 'plc-1', 'floor' => '1.3456', 'currency' => 'EUR' },
+              ]
+            }
+          }
+        }
+      end
+
+      it 'an empty Protobuf message' do
+        expect(described_class.new(input_hash).run.is_a?(FYBER::Userconfiguration::PlacementSeq)).to be(true)
+        expect(described_class.new(input_hash).run).blank?
       end
     end
 

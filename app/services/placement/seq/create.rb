@@ -9,8 +9,8 @@ class Placement::Seq::Create
   def initialize(xml_hash)
     @eur_placements = []
     @eur_creatives = []
-    @raw_placements = xml_hash.dig('Configuration', 'Placements', 'Placement')
-    @raw_creatives = xml_hash.dig('Configuration', 'Creatives', 'Creative')
+    @raw_placements = xml_hash&.dig('Configuration', 'Placements', 'Placement')
+    @raw_creatives = xml_hash&.dig('Configuration', 'Creatives', 'Creative')
     @placement_seq_message = ::FYBER::Userconfiguration::PlacementSeq.new
   end
 
