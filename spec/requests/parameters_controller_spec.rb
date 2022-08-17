@@ -32,6 +32,7 @@ RSpec.describe 'ParametersController', type: :request do
           '</Placements>'\
         '</Configuration>'
       end
+
       it 'print a Protobuf message to stdout' do
         get '/parse_xml',
             env: { 'RAW_POST_DATA' => input_xml },

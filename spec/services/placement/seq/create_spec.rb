@@ -167,9 +167,9 @@ RSpec.describe Placement::Seq::Create do
     end
 
     context 'when the XML hash is empty' do
-      it 'an empty Protobuf message' do
+      it 'returns a Protobuf message with an empty "placement" key' do
         expect(described_class.new(nil).run.is_a?(FYBER::Userconfiguration::PlacementSeq)).to be(true)
-        expect(described_class.new(nil).run).blank?
+        expect(described_class.new(nil).run['placement'].blank?).to be(true)
       end
     end
 
@@ -186,9 +186,9 @@ RSpec.describe Placement::Seq::Create do
         }
       end
 
-      it 'an empty Protobuf message' do
+      it 'returns a Protobuf message with an empty "placement" key' do
         expect(described_class.new(input_hash).run.is_a?(FYBER::Userconfiguration::PlacementSeq)).to be(true)
-        expect(described_class.new(input_hash).run).blank?
+        expect(described_class.new(input_hash).run['placement'].blank?).to be(true)
       end
     end
 
@@ -210,9 +210,9 @@ RSpec.describe Placement::Seq::Create do
         }
       end
 
-      it 'an empty Protobuf message' do
+      it 'returns a Protobuf message with an empty "placement" key' do
         expect(described_class.new({}).run.is_a?(FYBER::Userconfiguration::PlacementSeq)).to be(true)
-        expect(described_class.new({}).run).blank?
+        expect(described_class.new({}).run['placement'].blank?).to be(true)
       end
     end
   end
