@@ -8,7 +8,7 @@ gem 'rails', '~> 6.0.5', '>= 6.0.5.1'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 
-gem 'google-protobuf', '~> 3.21', '>= 3.21.4'
+gem 'google-protobuf', '~> 3.21'
 gem 'spring'
 gem 'rexml'
 
