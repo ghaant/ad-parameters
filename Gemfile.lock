@@ -64,7 +64,7 @@ GEM
     erubi (1.11.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
-    google-protobuf (3.21.4-x86_64-linux)
+    google-protobuf (3.21.7-x86_64-linux)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     loofah (2.21.3)
@@ -153,7 +153,7 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
-  google-protobuf (~> 3.21, >= 3.21.4)
+  google-protobuf (~> 3.21)
   puma (~> 4.1)
   rails (~> 6.0.5, >= 6.0.5.1)
   rexml
