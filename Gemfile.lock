@@ -76,10 +76,10 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.2)
     minitest (5.18.1)
-    nio4r (2.5.8)
+    nio4r (2.5.9)
     nokogiri (1.15.3-x86_64-linux)
       racc (~> 1.4)
-    puma (4.3.12)
+    puma (5.6.7)
       nio4r (~> 2.0)
     racc (1.7.1)
     rack (2.2.7)
@@ -154,7 +154,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   google-protobuf (~> 3.21)
-  puma (~> 4.1)
+  puma (~> 5.6)
   rails (~> 6.0.5, >= 6.0.5.1)
   rexml
   rspec-rails
